@@ -1,24 +1,21 @@
 // @flow 
 import * as React from 'react';
-import { Col, Card, Button } from 'react-bootstrap';
+import { Col, Card } from 'react-bootstrap';
 import logo from '../static/holder.jpg';
 
-export const Book = () => {
+export const Book = ({ title, description, isDescShortened, image }) => {
+
+    const shortenSign = isDescShortened ? "..." : ""
+
     return (
-        <>
-            <Col xs={12} md={4} className={`p-3`}>
-                <Card>
-                    <Card.Img variant="top" src={logo} />
+            <Col sm={6} lg={4} xl={3} className={`p-3`}>
+                <Card className="h-100">
+                    <Card.Img src={image} />
                     <Card.Body>
-                        <Card.Title>Card Title</Card.Title>
-                        <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                        </Card.Text>
-                        <Button variant="primary">Go somewhere</Button>
+                        <Card.Title><span className="align-middle">{ title }</span></Card.Title>
+                        <Card.Text>{ description.replace(/^(.{130}[^\s]*).*/, "$1") + shortenSign }</Card.Text>
                     </Card.Body>
                 </Card>
             </Col>
-        </>
     );
 };

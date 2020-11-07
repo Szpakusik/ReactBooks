@@ -10,7 +10,6 @@ function Search({ handleChange, handleSearch, books }) {
           <p className="h3">Wpisz nazwę książki</p>
           <input type="text" className="form-control m-3" onChange={ handleChange } />
           <Button variant="success" onClick={ handleSearch }>Szukaj</Button>
-          <p className="h3 mt-3">Znalezione książki: ({ books.length })</p>
         </Col>
       </Row>
     </>
