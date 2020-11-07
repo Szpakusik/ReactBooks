@@ -1,15 +1,17 @@
 import './App.scss';
+import SearchContainer from './Containers/SearchContainer'
 import {
   Navbar,
-  Row,
-  Col
+  Container
 } from 'react-bootstrap'
 
 function App() {
   return (
-    <div className="App bg-dark">
+    <div className="App h-100">
       <Navbar className="bg-dark text-center" expand="md">qwe</Navbar>
-      <Row></Row>
+      <Container>
+        <SearchContainer />
+      </Container>
     </div>
   );
 }
