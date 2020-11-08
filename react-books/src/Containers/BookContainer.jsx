@@ -5,7 +5,6 @@ import { Row } from 'react-bootstrap';
 import { Book } from '../Components/Book';
 
 function BookContainer ( { books } ) {
-    console.log(books[0]);
     return (
         <>
             <p className="h3 mt-3">Znalezione książki:</p>

@@ -8,7 +8,6 @@ function SearchContainer({ findBooks, books }) {
   const [search, setSearch] = useState("");
 
   const handleSearch = () => {
-    console.log(search);
     findBooks(search)
   }
   const handleChange = e => setSearch(e.target.value);
