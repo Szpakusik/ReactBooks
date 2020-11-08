@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Col, Card } from 'react-bootstrap';
 import logo from '../static/holder.jpg';
 
-export const Book = ({ title, author, description, isDescShortened, image }) => {
+export const Book = ({ title, author, releasedDate, description, isDescShortened, image }) => {
 
     const shortenSign = isDescShortened ? "..." : ""
 
@@ -14,6 +14,7 @@ export const Book = ({ title, author, description, isDescShortened, image }) => 
                     <Card.Body>
                         <Card.Title><span className="align-middle">{ title }</span></Card.Title>
                         <Card.Subtitle>{author}</Card.Subtitle>
+                        <Card.Subtitle className="mt-1 text-secondary">{releasedDate}</Card.Subtitle>
                         <Card.Text>{ description.replace(/^(.{130}[^\s]*).*/, "$1") + shortenSign }</Card.Text>
                     </Card.Body>
                 </Card>
