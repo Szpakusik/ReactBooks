@@ -24,7 +24,10 @@ function SearchContainer({ findBooks, books }) {
       author,
       language,
       fromDate,
-      toDate
+      toDate,
+      resultsNumber: 0,
+      toShowNumber: 40, // To show must be global
+      overwrite: true
     })
   }
 
