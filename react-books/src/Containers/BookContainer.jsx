@@ -13,16 +13,18 @@ function BookContainer ( { books } ) {
 
                         const bookInfo = book.volumeInfo;
                         const bookDesc = bookInfo.description;
+                        const bookImages = bookInfo.imageLinks;
 
-                        let biggerImg = bookInfo.imageLinks.thumbnail
-                        biggerImg=biggerImg.replace("&zoom=1","")
+                        let biggerImg = bookImages && bookImages.thumbnail
+                        biggerImg= biggerImg && biggerImg.replace("&zoom=1","")
                         
                         return <Book 
                             title={bookInfo.title} 
+                            author={bookInfo.authors && bookInfo.authors[0]}
                             description={bookDesc ? bookDesc : "No description available"} 
                             isDescShortened={bookDesc && bookDesc.length > 130}
                             image={biggerImg}
-                            />
+                        />
                     }
                     
                 ) : null }
