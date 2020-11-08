@@ -2,8 +2,10 @@ import axios from "axios"
 
 export const findBooks = ({ search, author, language, fromDate, toDate }) => {
 
+    const languageParameter = language ? `&langRestrict=${language}`: ""
+
     return ( dispatch ) => {
-        return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search+" "+author}&maxResults=40`)
+        return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search+" "+author}&maxResults=40`+languageParameter)
         .then( (response) => {
             let books = response.data.items;
             let filteredBooks = checkAuthorMatch( author, books )

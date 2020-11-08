@@ -7,13 +7,14 @@ function SearchContainer({ findBooks, books }) {
 
   const [search, setSearch] = useState("");
   const [author, setAuthor] = useState("");
-  const [language, setlanguage] = useState("");
+  const [language, setLanguage] = useState("");
 
   const [toDate, setToDate] = useState("");
   const [fromDate, setFromDate] = useState("");
 
   const handleQueryChange = e => setSearch(e.target.value);
   const handleAuthorChange = e => setAuthor(e.target.value);
+  const handleLanguageChange = e => setLanguage(e.target.value);
   const handleFromDateChange = e => setFromDate(e.target.value);
   const handleToDateChange = e => setToDate(e.target.value);
   
@@ -33,6 +34,7 @@ function SearchContainer({ findBooks, books }) {
         handleSearch={handleSearch}
         handleQueryChange={handleQueryChange}
         handleAuthorChange={handleAuthorChange}
+        handleLanguageChange={handleLanguageChange}
         handleFromDateChange={handleFromDateChange}
         handleToDateChange={handleToDateChange} />
     </>
@@ -40,7 +42,6 @@ function SearchContainer({ findBooks, books }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return{
       books: state.bookReducer.books,
   }

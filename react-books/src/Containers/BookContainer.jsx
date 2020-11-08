@@ -24,6 +24,7 @@ function BookContainer ( { books } ) {
                             description={bookDesc ? bookDesc : "No description available"} 
                             isDescShortened={bookDesc && bookDesc.length > 130}
                             image={biggerImg}
+                            key={book.id}
                         />
                     }
                     

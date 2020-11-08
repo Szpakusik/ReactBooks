@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
 
-function Search({ handleSearch, handleQueryChange, handleAuthorChange, handleFromDateChange, handleToDateChange }) {
+function Search({ handleSearch, handleQueryChange, handleAuthorChange, handleLanguageChange, handleFromDateChange, handleToDateChange }) {
 
   return (
     <>
@@ -29,13 +29,12 @@ function Search({ handleSearch, handleQueryChange, handleAuthorChange, handleFro
               <input type="text" className="form-control my-1 text-center" onChange={ handleToDateChange } placeholder="Do"/>
             </Col>
             <Col md="4" className="pl-5 pr-3">
-              <select className="form-control m-1 text-center">
+              <select onChange={handleLanguageChange} className="form-control m-1 text-center">
                 <option value="" defaultValue>Wybierz język</option>
                 <option value="pl">Polski</option>
                 <option value="en">Angielski</option>
                 <option value="de">Niemiecki</option>
                 <option value="ru">Rosyjski</option>
-                <option value="other">Inny</option>
               </select>
             </Col>
           </Row>
