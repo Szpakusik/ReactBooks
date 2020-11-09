@@ -1,17 +1,43 @@
 import axios from "axios"
 
-export const findBooks = ({ search, author, language, fromDate, toDate, resultNumber }) => {
+let searchIndex = 0;
 
-    const languageParameter = language ? `&langRestrict=${language}`: ""
+export const findBooks = ({ search, author, language, fromDate, toDate, resultsNumber, toShowNumber, overwrite }) => {
+
+    const action = overwrite ? "GET_BOOKS" : "GET_MORE_BOOKS";
+    searchIndex = overwrite ? 0 : searchIndex;
+
+    const languageParameter = language ? `&langRestrict=${language}`: "";
+    const startIndexParameter = `&startIndex=${searchIndex}`
+
+    let url = `https://www.googleapis.com/books/v1/volumes?q=${search+" "+author}&maxResults=40`;
+    url = url + languageParameter + startIndexParameter;
+
+    searchIndex += 40;
 
     return ( dispatch ) => {
-        dispatch( { type: "GET_BOOKS", payload: [] } );
-        return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search+" "+author}&maxResults=40`+languageParameter)
-        .then( (response) => {
-            let filteredBooks = checkAuthorMatch( author, response.data.items )
+        return axios.get(url).then( (response) => {
+
+            let filteredBooks = response.data.items
+            if( !filteredBooks ) return false
+
+            filteredBooks = checkAuthorMatch( author, filteredBooks )
             filteredBooks = checkDateMatch( fromDate, toDate, filteredBooks )
-            // getMoreResults();
-            dispatch( { type: "GET_BOOKS", payload: filteredBooks } )
+
+            dispatch( { type: action, payload: { filteredBooks }  } )
+
+            if( toShowNumber > resultsNumber + filteredBooks.length && response.data.items.length ){
+                findBooks({ 
+                    search,
+                    author,
+                    language,
+                    fromDate,
+                    toDate,
+                    toShowNumber,
+                    resultsNumber: resultsNumber + filteredBooks.length,
+                    overwrite: false }
+                )(dispatch)
+            }
         } )
         .catch( (err) => {
             throw err;
@@ -19,6 +45,24 @@ export const findBooks = ({ search, author, language, fromDate, toDate, resultNu
         } )
     }
 };
+
+export const increaseBookLimit = ( ) => {
+    return ( dispatch ) => {
+        dispatch( { type: "SET_BOOK_LIMIT" } )
+    }
+}
+
+export const resetBookLimit = ( ) => {
+    return ( dispatch ) => {
+        dispatch( { type: "RESET_BOOK_LIMIT" } )
+    }
+}
+
+export const setQueryInfo = (queryInfo) => {
+    return ( dispatch ) => {
+        dispatch( { type: "SET_QUERY_INFO", payload: queryInfo } )
+    }
+}
 
 const checkAuthorMatch = ( authorSearch, books ) => {
     
@@ -30,15 +74,13 @@ const checkAuthorMatch = ( authorSearch, books ) => {
 
             let filterResult = false
             let authorSearchParts = authorSearch.split(" ")
-            let authorArray = book.volumeInfo.authors;
-            if ( !authorArray ) return false;
+            let authorsArray = book.volumeInfo.authors;
+            if ( !authorsArray ) return false;
 
-            outer: for (let j = 0; j < authorArray.length; j++) {
-                let author = authorArray[j];
+            outer: for (let j = 0; j < authorsArray.length; j++) {
                 for (let i = 0; i < authorSearchParts.length; i++) {
                     let searchPart = authorSearchParts[i].toLowerCase();
-                    filterResult = author.toLowerCase().includes( searchPart )
-
+                    filterResult = authorsArray[j].toLowerCase().includes( searchPart )
                     if( filterResult ) break outer;
                 }
             }
@@ -51,22 +93,17 @@ const checkAuthorMatch = ( authorSearch, books ) => {
 }
 
 const checkDateMatch = ( fromDate, toDate, books ) => {
-    let filtered = books;
 
-    if ( fromDate || toDate ) {
-        filtered = books.filter( ( book ) => {
-            
-            const releaseDate = book.volumeInfo.publishedDate;
-            if( !releaseDate ) return false;
+    if ( !fromDate && !toDate ) return books
 
-            const releaseYear = releaseDate.slice(0, 4);
-            
-            if ( fromDate && fromDate > releaseYear) return false;
-            if ( toDate && toDate < releaseYear) return false;
+    return books.filter( ( book ) => {
+        const releaseDate = book.volumeInfo.publishedDate;
+        const releaseYear = releaseDate && releaseDate.slice(0, 4);
+        
+        if ( fromDate && fromDate > releaseYear) return false;
+        if ( toDate && toDate < releaseYear) return false;
 
-            return true
-        } )
-    }
+        return true
+    } )
 
-    return filtered
 }
