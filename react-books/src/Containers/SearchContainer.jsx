@@ -36,7 +36,7 @@ function SearchContainer({ findBooks, resetBookLimit, setQueryInfo }) {
       fromDate,
       toDate,
       resultsNumber: 0,
-      toShowNumber: 5,
+      toShowNumber: 16,
       overwrite: true
     })
   }

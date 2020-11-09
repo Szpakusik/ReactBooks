@@ -24,7 +24,8 @@ export const findBooks = ({ search, author, language, fromDate, toDate, resultsN
             filteredBooks = checkAuthorMatch( author, filteredBooks )
             filteredBooks = checkDateMatch( fromDate, toDate, filteredBooks )
 
-            dispatch( { type: action, payload: { filteredBooks, toShowNumber }  } )
+            dispatch( { type: action, payload: { filteredBooks }  } )
+
             if( toShowNumber > resultsNumber + filteredBooks.length && response.data.items.length ){
                 findBooks({ 
                     search,

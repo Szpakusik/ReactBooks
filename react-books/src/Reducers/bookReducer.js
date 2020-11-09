@@ -22,12 +22,12 @@ export default function bookReducer(state = initialState, action) {
         case "SET_BOOK_LIMIT":
             return {
                 ...state,
-                toShowNumber: state.toShowNumber+5
+                toShowNumber: state.toShowNumber + 8
             }
         case "RESET_BOOK_LIMIT":
             return {
                 ...state,
-                toShowNumber: 5
+                toShowNumber: 12
             }
         case "SET_QUERY_INFO":
             return {
