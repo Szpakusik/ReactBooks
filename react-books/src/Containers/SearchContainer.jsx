@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as BookActions from "../Actions/BookActions"
 import Search from "../Components/Search"
 
-function SearchContainer({ findBooks, books }) {
+function SearchContainer({ findBooks, resetBookLimit, setQueryInfo }) {
 
   const [search, setSearch] = useState("");
   const [author, setAuthor] = useState("");
@@ -19,6 +19,16 @@ function SearchContainer({ findBooks, books }) {
   const handleToDateChange = e => setToDate(e.target.value);
   
   const handleSearch = () => {
+    resetBookLimit()
+
+    setQueryInfo({
+      search,
+      author,
+      language,
+      fromDate,
+      toDate
+    })
+    
     findBooks({
       search,
       author,
@@ -26,7 +36,7 @@ function SearchContainer({ findBooks, books }) {
       fromDate,
       toDate,
       resultsNumber: 0,
-      toShowNumber: 40, // To show must be global
+      toShowNumber: 5,
       overwrite: true
     })
   }

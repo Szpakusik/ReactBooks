@@ -1,7 +1,8 @@
 const initialState = {
     books: [],
     loading: false,
-    toShowNumber: 40
+    toShowNumber: 0,
+    queryInfo: {}
 };
 
 export default function bookReducer(state = initialState, action) {
@@ -10,14 +11,30 @@ export default function bookReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                books: action.payload
+                books: action.payload.filteredBooks
             }
         case "GET_MORE_BOOKS":
-            console.log(state);
             return {
                 ...state,
                 loading: false,
-                books: [...state.books, ...action.payload]
+                books: [...state.books, ...action.payload.filteredBooks]
+            }
+        case "SET_BOOK_LIMIT":
+            return {
+                ...state,
+                toShowNumber: state.toShowNumber+5
+            }
+        case "RESET_BOOK_LIMIT":
+            return {
+                ...state,
+                toShowNumber: 5
+            }
+        case "SET_QUERY_INFO":
+            return {
+                ...state,
+                queryInfo: {
+                    ...action.payload,
+                }
             }
         default:
             return state;

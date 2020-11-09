@@ -4,7 +4,7 @@ let searchIndex = 0;
 
 export const findBooks = ({ search, author, language, fromDate, toDate, resultsNumber, toShowNumber, overwrite }) => {
 
-    const action = overwrite ? "GET_BOOKS" : "GET_MORE_BOOKS"
+    const action = overwrite ? "GET_BOOKS" : "GET_MORE_BOOKS";
     searchIndex = overwrite ? 0 : searchIndex;
 
     const languageParameter = language ? `&langRestrict=${language}`: "";
@@ -12,7 +12,7 @@ export const findBooks = ({ search, author, language, fromDate, toDate, resultsN
 
     let url = `https://www.googleapis.com/books/v1/volumes?q=${search+" "+author}&maxResults=40`;
     url = url + languageParameter + startIndexParameter;
-    
+
     searchIndex += 40;
 
     return ( dispatch ) => {
@@ -24,8 +24,7 @@ export const findBooks = ({ search, author, language, fromDate, toDate, resultsN
             filteredBooks = checkAuthorMatch( author, filteredBooks )
             filteredBooks = checkDateMatch( fromDate, toDate, filteredBooks )
 
-            dispatch( { type: action, payload: filteredBooks } )
-            
+            dispatch( { type: action, payload: { filteredBooks, toShowNumber }  } )
             if( toShowNumber > resultsNumber + filteredBooks.length && response.data.items.length ){
                 findBooks({ 
                     search,
@@ -45,6 +44,24 @@ export const findBooks = ({ search, author, language, fromDate, toDate, resultsN
         } )
     }
 };
+
+export const increaseBookLimit = ( ) => {
+    return ( dispatch ) => {
+        dispatch( { type: "SET_BOOK_LIMIT" } )
+    }
+}
+
+export const resetBookLimit = ( ) => {
+    return ( dispatch ) => {
+        dispatch( { type: "RESET_BOOK_LIMIT" } )
+    }
+}
+
+export const setQueryInfo = (queryInfo) => {
+    return ( dispatch ) => {
+        dispatch( { type: "SET_QUERY_INFO", payload: queryInfo } )
+    }
+}
 
 const checkAuthorMatch = ( authorSearch, books ) => {
     
