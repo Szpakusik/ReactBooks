@@ -38,7 +38,9 @@ function BookContainer ( { books, queryInfo, busyStatus, findBooks, increaseBook
                         const bookImages = bookInfo.imageLinks;
                         const bookReleaseDate = bookInfo.publishedDate;
 
-                        let biggerImg = bookImages && bookImages.thumbnail
+                        let biggerImg = bookImages && bookImages.thumbnail ? bookImages.thumbnail 
+                        : "http://books.google.com/books/content?id=KCBezQEACAAJ&printsec=frontcover&img=1&source=gbs_api"
+                        
                         biggerImg= biggerImg && biggerImg.replace("&zoom=1","")
                         
                         return <Book 

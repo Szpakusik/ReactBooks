@@ -9,7 +9,7 @@ const Book = ({ title, author, releasedDate, description, isDescShortened, image
     return (
             <Col sm={6} lg={4} xl={3} className={`p-3`}>
                 <Card className="h-100">
-                    <Card.Img src={image} />
+                    <Card.Img src={image} height={"300px"}/>
                     <Card.Body>
                         <Card.Title><span className="align-middle">{ title }</span></Card.Title>
                         <Card.Subtitle>{author}</Card.Subtitle>
