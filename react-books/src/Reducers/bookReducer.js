@@ -7,16 +7,24 @@ const initialState = {
 
 export default function bookReducer(state = initialState, action) {
     switch (action.type) {
-        case "GET_BOOKS":
+        case "SET_BUSY":
+            return {
+                ...state,
+                loading: action.payload,
+            }
+        case "SEARCH_FAILED":
             return {
                 ...state,
                 loading: false,
+            }
+        case "GET_BOOKS":
+            return {
+                ...state,
                 books: action.payload.filteredBooks
             }
         case "GET_MORE_BOOKS":
             return {
                 ...state,
-                loading: false,
                 books: [...state.books, ...action.payload.filteredBooks]
             }
         case "SET_BOOK_LIMIT":

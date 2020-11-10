@@ -16,10 +16,16 @@ export const findBooks = ({ search, author, language, fromDate, toDate, resultsN
     searchIndex += 40;
 
     return ( dispatch ) => {
+        dispatch( { type: "START_SEARCH" } )
         return axios.get(url).then( (response) => {
 
             let filteredBooks = response.data.items
-            if( !filteredBooks ) return false
+            if( !filteredBooks ) {
+                dispatch( { type: action, payload: { filteredBooks: [] }  } )
+                dispatch( { type: "SET_BUSY", payload: false } )
+                return false;
+            }
+
 
             filteredBooks = checkAuthorMatch( author, filteredBooks )
             filteredBooks = checkDateMatch( fromDate, toDate, filteredBooks )
@@ -37,11 +43,12 @@ export const findBooks = ({ search, author, language, fromDate, toDate, resultsN
                     resultsNumber: resultsNumber + filteredBooks.length,
                     overwrite: false }
                 )(dispatch)
-            }
+            } 
+            else dispatch( { type: "SET_BUSY", payload: false } )
+
         } )
         .catch( (err) => {
-            throw err;
-            // dispatch( { type: "GET_BOOKS_FAILED" } )
+            dispatch( { type: "SET_BUSY", payload: false } )
         } )
     }
 };
@@ -61,6 +68,11 @@ export const resetBookLimit = ( ) => {
 export const setQueryInfo = (queryInfo) => {
     return ( dispatch ) => {
         dispatch( { type: "SET_QUERY_INFO", payload: queryInfo } )
+    }
+}
+export const setBusy = ( busyStatus ) => {
+    return ( dispatch ) => {
+        dispatch( { type: "SET_BUSY", payload: busyStatus } )
     }
 }
 
