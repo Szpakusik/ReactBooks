@@ -26,7 +26,6 @@ export const findBooks = ({ search, author, language, fromDate, toDate, resultsN
                 return false;
             }
 
-
             filteredBooks = checkAuthorMatch( author, filteredBooks )
             filteredBooks = checkDateMatch( fromDate, toDate, filteredBooks )
 
@@ -76,7 +75,7 @@ export const setBusy = ( busyStatus ) => {
     }
 }
 
-const checkAuthorMatch = ( authorSearch, books ) => {
+export const checkAuthorMatch = ( authorSearch, books ) => {
     
     let filtered = books
     
@@ -104,7 +103,7 @@ const checkAuthorMatch = ( authorSearch, books ) => {
     return filtered
 }
 
-const checkDateMatch = ( fromDate, toDate, books ) => {
+export const checkDateMatch = ( fromDate, toDate, books ) => {
 
     if ( !fromDate && !toDate ) return books
 
