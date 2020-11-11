@@ -1,16 +1,15 @@
 // @flow 
 import * as React from 'react';
 import { Col, Card } from 'react-bootstrap';
-import logo from '../static/holder.jpg';
 
-export const Book = ({ title, author, releasedDate, description, isDescShortened, image }) => {
+const Book = ({ title, author, releasedDate, description, isDescShortened, image }) => {
 
     const shortenSign = isDescShortened ? "..." : ""
 
     return (
             <Col sm={6} lg={4} xl={3} className={`p-3`}>
                 <Card className="h-100">
-                    <Card.Img src={image} />
+                    <Card.Img src={image} height={"300px"}/>
                     <Card.Body>
                         <Card.Title><span className="align-middle">{ title }</span></Card.Title>
                         <Card.Subtitle>{author}</Card.Subtitle>
@@ -21,3 +20,5 @@ export const Book = ({ title, author, releasedDate, description, isDescShortened
             </Col>
     );
 };
+
+export default Book;

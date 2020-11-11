@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import * as BookActions from "../Actions/BookActions"
 import { connect } from 'react-redux';
 import { Row } from 'react-bootstrap';
-import { Book } from '../Components/Book';
+import Book from '../Components/Book';
+import Loader from 'react-loader-spinner';
 
 function BookContainer ( { books, queryInfo, busyStatus, findBooks, increaseBookLimit, toShowNumber } ) {
-
     useEffect(() => {
         const onScroll = e => {
             if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
@@ -23,10 +23,12 @@ function BookContainer ( { books, queryInfo, busyStatus, findBooks, increaseBook
     
         return () => window.removeEventListener("scroll", onScroll);
     });
-
     return (
-        <>
-            <p className="h3 mt-3">Znalezione książki:</p>
+        <>  
+            { books.length ? <p className="h3 mt-3">Znalezione książki:</p> : null }
+            { !books.length && queryInfo.hasOwnProperty("search") && busyStatus === false ? 
+            <p className="h5 mt-5 text-secondary">Nie znaleziono żadnych książek...</p> : null }
+
             <Row className="align-items-stretch">
                 { books.length ? books.map( ( book, index ) => {
                         if ( index >= toShowNumber ) return null;
@@ -36,7 +38,9 @@ function BookContainer ( { books, queryInfo, busyStatus, findBooks, increaseBook
                         const bookImages = bookInfo.imageLinks;
                         const bookReleaseDate = bookInfo.publishedDate;
 
-                        let biggerImg = bookImages && bookImages.thumbnail
+                        let biggerImg = bookImages && bookImages.thumbnail ? bookImages.thumbnail 
+                        : "http://books.google.com/books/content?id=KCBezQEACAAJ&printsec=frontcover&img=1&source=gbs_api"
+                        
                         biggerImg= biggerImg && biggerImg.replace("&zoom=1","")
                         
                         return <Book 
@@ -51,7 +55,10 @@ function BookContainer ( { books, queryInfo, busyStatus, findBooks, increaseBook
                     }
                     
                 ) : null }
+
             </Row>
+
+            { busyStatus && <Loader type="TailSpin" height="50" width="50" className="my-4"/> }
         </>
     );
 };

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as BookActions from "../Actions/BookActions"
 import Search from "../Components/Search"
 
-function SearchContainer({ findBooks, resetBookLimit, setQueryInfo }) {
+function SearchContainer({ findBooks, resetBookLimit, setQueryInfo, setBusy, busy }) {
 
   const [search, setSearch] = useState("");
   const [author, setAuthor] = useState("");
@@ -20,6 +20,8 @@ function SearchContainer({ findBooks, resetBookLimit, setQueryInfo }) {
   
   const handleSearch = () => {
     resetBookLimit()
+
+    setBusy( true )
 
     setQueryInfo({
       search,
@@ -44,6 +46,7 @@ function SearchContainer({ findBooks, resetBookLimit, setQueryInfo }) {
   return (
     <>
       <Search
+        search={search}
         handleSearch={handleSearch}
         handleQueryChange={handleQueryChange}
         handleAuthorChange={handleAuthorChange}
@@ -57,6 +60,7 @@ function SearchContainer({ findBooks, resetBookLimit, setQueryInfo }) {
 const mapStateToProps = (state) => {
   return{
       books: state.bookReducer.books,
+      busy: state.bookReducer.loading,
   }
 }
 

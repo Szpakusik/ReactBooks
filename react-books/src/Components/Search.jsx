@@ -1,8 +1,7 @@
 import React from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
 
-function Search({ handleSearch, handleQueryChange, handleAuthorChange, handleLanguageChange, handleFromDateChange, handleToDateChange }) {
-
+function Search({ handleSearch, handleQueryChange, handleAuthorChange, handleLanguageChange, handleFromDateChange, handleToDateChange, search }) {
   return (
     <>
       <Row className="p-3">
@@ -38,7 +37,7 @@ function Search({ handleSearch, handleQueryChange, handleAuthorChange, handleLan
               </select>
             </Col>
           </Row>
-          <Button className="mt-2" variant="success" onClick={ handleSearch }>Szukaj</Button>
+          <Button className="mt-2" variant="success" disabled={!search.length} onClick={ handleSearch }>Szukaj</Button>
         </Col>
       </Row>
     </>
