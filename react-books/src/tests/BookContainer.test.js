@@ -2,7 +2,7 @@ import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import BookContainer from "../Containers/BookContainer";
-import store from "./test-utils/mockStore";
+import store from "../Store/store";
 import { Provider } from "react-redux";
 
 

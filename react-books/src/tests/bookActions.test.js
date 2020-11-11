@@ -1,5 +1,4 @@
 import * as BookActions from "../Actions/BookActions"
-import { items } from "./test-utils/fakeBooks";
 
 const fakeDateBooks = [];
 
