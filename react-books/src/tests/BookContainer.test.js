@@ -28,18 +28,3 @@ it("Renders Container", async () => {
 
     expect(container.querySelectorAll(".row").length).toBe(1);
 });
-
-// it("Renders Books", async () => {
-//     act( () => {
-//         render(
-//         <Provider store={store}>
-//             <BookContainer/>
-//         </Provider>, container);
-//     });
-//     const waitForRender = new Promise((resolve) => {
-//         setTimeout( () => { 
-//             resolve(container.querySelectorAll(".card").length)
-//          }, 1000 )
-//     })
-//     return await expect(waitForRender).resolves.toEqual(40)
-// });

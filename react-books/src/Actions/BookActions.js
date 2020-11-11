@@ -26,7 +26,6 @@ export const findBooks = ({ search, author, language, fromDate, toDate, resultsN
                 return false;
             }
 
-
             filteredBooks = checkAuthorMatch( author, filteredBooks )
             filteredBooks = checkDateMatch( fromDate, toDate, filteredBooks )
 
